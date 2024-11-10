@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transactions",
+  "info": {
+    "singularName": "transaction",
+    "pluralName": "transactions",
+    "displayName": "Transaction"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "refId": {
+      "type": "string",
+      "unique": true
+    },
+    "amount": {
+      "type": "float"
+    }
+  }
+}
