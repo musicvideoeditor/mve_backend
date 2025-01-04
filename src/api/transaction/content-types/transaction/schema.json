@@ -4,7 +4,8 @@
   "info": {
     "singularName": "transaction",
     "pluralName": "transactions",
-    "displayName": "Transaction"
+    "displayName": "Transaction",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -17,6 +18,37 @@
     },
     "amount": {
       "type": "float"
+    },
+    "project": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project.project"
+    },
+    "paidBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "transactionDate": {
+      "type": "datetime"
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "success",
+        "failed",
+        "canceled"
+      ]
+    },
+    "method": {
+      "type": "enumeration",
+      "enum": [
+        "stripe",
+        "razorpay",
+        "upi",
+        "cash"
+      ]
     }
   }
 }
