@@ -1,5 +1,5 @@
 module.exports = ({ env }) => ({
-  url: env('PUBLIC_URL', 'https://api.musicvideoeditor.com'),
+  // url: env('PUBLIC_URL', 'https://api.musicvideoeditor.com'),
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   app: {
