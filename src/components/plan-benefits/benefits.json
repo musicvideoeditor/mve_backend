@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_plan_benefits_benefits",
+  "info": {
+    "displayName": "benefits",
+    "icon": "check"
+  },
+  "options": {},
+  "attributes": {
+    "benefit": {
+      "type": "string"
+    }
+  }
+}

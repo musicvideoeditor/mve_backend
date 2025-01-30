@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "plans",
+  "info": {
+    "singularName": "plan",
+    "pluralName": "plans",
+    "displayName": "Plan",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "price": {
+      "type": "integer"
+    },
+    "cancelledPrice": {
+      "type": "integer"
+    },
+    "revisions": {
+      "type": "integer"
+    },
+    "validMonths": {
+      "type": "integer",
+      "max": 12,
+      "min": 1,
+      "required": true,
+      "default": 1
+    },
+    "benefits": {
+      "displayName": "benefits",
+      "type": "component",
+      "repeatable": true,
+      "component": "plan-benefits.benefits"
+    },
+    "color": {
+      "type": "customField",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+      "customField": "plugin::color-picker.color"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

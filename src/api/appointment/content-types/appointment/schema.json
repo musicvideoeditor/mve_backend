@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "appointments",
+  "info": {
+    "singularName": "appointment",
+    "pluralName": "appointments",
+    "displayName": "Appointment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "date": {
+      "type": "date"
+    },
+    "slots": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::appointment-slot.appointment-slot"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "transaction": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::transaction.transaction"
+    },
+    "meetingStatus": {
+      "type": "enumeration",
+      "enum": [
+        "upcoming",
+        "finished",
+        "canceled",
+        "postponed",
+        "absent"
+      ]
+    },
+    "postponedDate": {
+      "type": "date"
+    },
+    "meetingNotes": {
+      "type": "richtext"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "appointment_slots",
+  "info": {
+    "singularName": "appointment-slot",
+    "pluralName": "appointment-slots",
+    "displayName": "Appointment Slot",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "from": {
+      "type": "time"
+    },
+    "to": {
+      "type": "time"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

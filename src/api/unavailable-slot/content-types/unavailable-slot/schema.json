@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "unavailable_slots",
+  "info": {
+    "singularName": "unavailable-slot",
+    "pluralName": "unavailable-slots",
+    "displayName": "Unavailable Slot"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "isHoliday": {
+      "type": "boolean"
+    },
+    "date": {
+      "type": "date"
+    },
+    "unavailableSlots": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::appointment-slot.appointment-slot"
+    }
+  }
+}

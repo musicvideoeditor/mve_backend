@@ -369,6 +369,86 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAppointmentSlotAppointmentSlot
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'appointment_slots';
+  info: {
+    description: '';
+    displayName: 'Appointment Slot';
+    pluralName: 'appointment-slots';
+    singularName: 'appointment-slot';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    from: Schema.Attribute.Time;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::appointment-slot.appointment-slot'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    to: Schema.Attribute.Time;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAppointmentAppointment extends Struct.CollectionTypeSchema {
+  collectionName: 'appointments';
+  info: {
+    description: '';
+    displayName: 'Appointment';
+    pluralName: 'appointments';
+    singularName: 'appointment';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::appointment.appointment'
+    > &
+      Schema.Attribute.Private;
+    meetingNotes: Schema.Attribute.RichText;
+    meetingStatus: Schema.Attribute.Enumeration<
+      ['upcoming', 'finished', 'canceled', 'postponed', 'absent']
+    >;
+    postponedDate: Schema.Attribute.Date;
+    publishedAt: Schema.Attribute.DateTime;
+    slots: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::appointment-slot.appointment-slot'
+    >;
+    title: Schema.Attribute.String;
+    transaction: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::transaction.transaction'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiCommentComment extends Struct.CollectionTypeSchema {
   collectionName: 'comments';
   info: {
@@ -403,6 +483,90 @@ export interface ApiCommentComment extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     video: Schema.Attribute.Relation<'oneToOne', 'api::video.video'>;
+  };
+}
+
+export interface ApiNotificationNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'notifications';
+  info: {
+    description: '';
+    displayName: 'Notification';
+    pluralName: 'notifications';
+    singularName: 'notification';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<
+      ['project', 'system', 'transaction']
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaLabel: Schema.Attribute.String;
+    ctaUrl: Schema.Attribute.String;
+    description: Schema.Attribute.String;
+    isGlobalNotification: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::notification.notification'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    targetUser: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPlanPlan extends Struct.CollectionTypeSchema {
+  collectionName: 'plans';
+  info: {
+    description: '';
+    displayName: 'Plan';
+    pluralName: 'plans';
+    singularName: 'plan';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    benefits: Schema.Attribute.Component<'plan-benefits.benefits', true>;
+    cancelledPrice: Schema.Attribute.Integer;
+    color: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::plan.plan'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    price: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    revisions: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    validMonths: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 12;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
   };
 }
 
@@ -446,6 +610,48 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSubscriptionSubscription
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'subscriptions';
+  info: {
+    description: '';
+    displayName: 'Subscription';
+    pluralName: 'subscriptions';
+    singularName: 'subscription';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expiresAt: Schema.Attribute.Date;
+    gateway: Schema.Attribute.Enumeration<['Stripe', 'UPI']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subscription.subscription'
+    > &
+      Schema.Attribute.Private;
+    paidAt: Schema.Attribute.Date;
+    plan: Schema.Attribute.Relation<'oneToOne', 'api::plan.plan'>;
+    publishedAt: Schema.Attribute.DateTime;
+    refId: Schema.Attribute.String;
+    subscriptionStatus: Schema.Attribute.Enumeration<
+      ['pending', 'subscribed', 'cancelled', 'expired']
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiTransactionTransaction extends Struct.CollectionTypeSchema {
   collectionName: 'transactions';
   info: {
@@ -480,6 +686,40 @@ export interface ApiTransactionTransaction extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     refId: Schema.Attribute.String & Schema.Attribute.Unique;
     transactionDate: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUnavailableSlotUnavailableSlot
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'unavailable_slots';
+  info: {
+    displayName: 'Unavailable Slot';
+    pluralName: 'unavailable-slots';
+    singularName: 'unavailable-slot';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    isHoliday: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::unavailable-slot.unavailable-slot'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    unavailableSlots: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::appointment-slot.appointment-slot'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1025,9 +1265,15 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::appointment-slot.appointment-slot': ApiAppointmentSlotAppointmentSlot;
+      'api::appointment.appointment': ApiAppointmentAppointment;
       'api::comment.comment': ApiCommentComment;
+      'api::notification.notification': ApiNotificationNotification;
+      'api::plan.plan': ApiPlanPlan;
       'api::project.project': ApiProjectProject;
+      'api::subscription.subscription': ApiSubscriptionSubscription;
       'api::transaction.transaction': ApiTransactionTransaction;
+      'api::unavailable-slot.unavailable-slot': ApiUnavailableSlotUnavailableSlot;
       'api::video.video': ApiVideoVideo;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
