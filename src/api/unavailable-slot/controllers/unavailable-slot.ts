@@ -23,9 +23,12 @@ export default factories.createCoreController(
         ctx.internalServerError(error);
       }
     },
-    getUnavailableSlots: async (ctx) => {
+    find: async (ctx) => {
       try {
         const { date } = ctx.query;
+
+        console.log('date', date)
+        console.log(date)
         const unavailableSlots = await strapi
           .documents("api::unavailable-slot.unavailable-slot")
           .findMany({
