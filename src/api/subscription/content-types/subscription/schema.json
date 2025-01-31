@@ -25,18 +25,12 @@
     "expiresAt": {
       "type": "date"
     },
-    "refId": {
-      "type": "string"
-    },
     "gateway": {
       "type": "enumeration",
       "enum": [
         "Stripe",
         "UPI"
       ]
-    },
-    "paidAt": {
-      "type": "date"
     },
     "subscriptionStatus": {
       "type": "enumeration",
@@ -47,6 +41,16 @@
         "expired"
       ],
       "default": "pending"
+    },
+    "transaction": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::transaction.transaction"
+    },
+    "project": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project.project"
     }
   }
 }

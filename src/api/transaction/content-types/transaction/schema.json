@@ -19,17 +19,12 @@
     "amount": {
       "type": "float"
     },
-    "project": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::project.project"
-    },
     "paidBy": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "transactionDate": {
+    "paidAt": {
       "type": "datetime"
     },
     "paymentStatus": {

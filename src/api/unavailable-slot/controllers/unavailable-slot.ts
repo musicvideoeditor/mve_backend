@@ -49,7 +49,7 @@ export default factories.createCoreController(
               date: date,
             },
             populate: {
-              slots:{
+              slot:{
                 fields: ["from", "to"]
               }
             },
@@ -64,9 +64,7 @@ export default factories.createCoreController(
           }
 
           for (let i = 0; i < bookedSlots.length; i++) {
-            for (let j = 0; j < bookedSlots[i].slots.length; j++) {
-              res.push(bookedSlots[i].slots[j])
-            }
+            res.push(bookedSlots[i].slot)
           }
 
         ctx.body = res;

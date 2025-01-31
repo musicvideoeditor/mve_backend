@@ -12,18 +12,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
+    "purpose": {
       "type": "string"
-    },
-    "description": {
-      "type": "text"
     },
     "date": {
       "type": "date"
     },
-    "slots": {
+    "slot": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::appointment-slot.appointment-slot"
     },
     "user": {
@@ -40,17 +37,27 @@
       "type": "enumeration",
       "enum": [
         "upcoming",
+        "ongoing",
         "finished",
         "canceled",
         "postponed",
         "absent"
-      ]
+      ],
+      "default": "upcoming"
     },
     "postponedDate": {
       "type": "date"
     },
     "meetingNotes": {
       "type": "richtext"
+    },
+    "meetingUrl": {
+      "type": "string"
+    },
+    "assignedTo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
     }
   }
 }

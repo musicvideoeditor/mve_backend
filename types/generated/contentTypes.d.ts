@@ -413,11 +413,11 @@ export interface ApiAppointmentAppointment extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    assignedTo: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
-    description: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -426,15 +426,17 @@ export interface ApiAppointmentAppointment extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     meetingNotes: Schema.Attribute.RichText;
     meetingStatus: Schema.Attribute.Enumeration<
-      ['upcoming', 'finished', 'canceled', 'postponed', 'absent']
-    >;
+      ['upcoming', 'ongoing', 'finished', 'canceled', 'postponed', 'absent']
+    > &
+      Schema.Attribute.DefaultTo<'upcoming'>;
+    meetingUrl: Schema.Attribute.String;
     postponedDate: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
-    slots: Schema.Attribute.Relation<
-      'oneToMany',
+    purpose: Schema.Attribute.String;
+    slot: Schema.Attribute.Relation<
+      'oneToOne',
       'api::appointment-slot.appointment-slot'
     >;
-    title: Schema.Attribute.String;
     transaction: Schema.Attribute.Relation<
       'oneToOne',
       'api::transaction.transaction'
@@ -634,14 +636,17 @@ export interface ApiSubscriptionSubscription
       'api::subscription.subscription'
     > &
       Schema.Attribute.Private;
-    paidAt: Schema.Attribute.Date;
     plan: Schema.Attribute.Relation<'oneToOne', 'api::plan.plan'>;
+    project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
-    refId: Schema.Attribute.String;
     subscriptionStatus: Schema.Attribute.Enumeration<
       ['pending', 'subscribed', 'cancelled', 'expired']
     > &
       Schema.Attribute.DefaultTo<'pending'>;
+    transaction: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::transaction.transaction'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -675,6 +680,7 @@ export interface ApiTransactionTransaction extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     method: Schema.Attribute.Enumeration<['stripe', 'razorpay', 'upi', 'cash']>;
+    paidAt: Schema.Attribute.DateTime;
     paidBy: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -682,10 +688,8 @@ export interface ApiTransactionTransaction extends Struct.CollectionTypeSchema {
     paymentStatus: Schema.Attribute.Enumeration<
       ['pending', 'success', 'failed', 'canceled']
     >;
-    project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     refId: Schema.Attribute.String & Schema.Attribute.Unique;
-    transactionDate: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
