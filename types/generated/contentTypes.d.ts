@@ -581,7 +581,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     singularName: 'project';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     author: Schema.Attribute.Relation<
@@ -604,6 +604,10 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     >;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    subscription: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::subscription.subscription'
+    >;
     thumbnail: Schema.Attribute.Media<'images'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -622,7 +626,7 @@ export interface ApiSubscriptionSubscription
     singularName: 'subscription';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -639,6 +643,13 @@ export interface ApiSubscriptionSubscription
     plan: Schema.Attribute.Relation<'oneToOne', 'api::plan.plan'>;
     project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
+    revisionsLeft: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
     subscriptionStatus: Schema.Attribute.Enumeration<
       ['pending', 'subscribed', 'cancelled', 'expired']
     > &
@@ -746,17 +757,20 @@ export interface ApiVideoVideo extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    duration: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::video.video'> &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     project: Schema.Attribute.Relation<'manyToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
+    source: Schema.Attribute.Enumeration<['local', 'bunny']>;
     thumbnail: Schema.Attribute.Media<'images'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     video: Schema.Attribute.Media<'videos'>;
+    videoUrl: Schema.Attribute.String;
   };
 }
 

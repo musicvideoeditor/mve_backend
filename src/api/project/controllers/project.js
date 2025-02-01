@@ -7,6 +7,73 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::project.project", ({ strapi }) => ({
+  find: async (ctx) => {
+    try {
+      const data = await strapi.documents("api::project.project").findMany({
+        filters: {
+          author: {
+            documentId: ctx.state.user.documentId,
+          },
+        },
+        fields: ["name", "description", "createdAt"],
+        populate: {
+          videos: {
+            fields: ["name"],
+          },
+        },
+        sort: {
+          createdAt: "desc",
+        },
+      });
+      const res = data.map((item) => {
+        return {
+          ...item,
+          videosCount: item.videos ? item.videos.length : 0,
+        };
+      });
+      ctx.body = res;
+    } catch (error) {
+      ctx.internalServerError(error);
+    }
+  },
+
+  findOne: async (ctx) => {
+    try {
+      const res = await strapi.documents("api::project.project").findOne({
+        documentId: ctx.params.id,
+        fields: ["name", "description", "createdAt"],
+        populate: {
+          videos: {
+            fields: ["name", "duration", "source", "videoUrl", "createdAt"],
+            populate: {
+              video: {
+                fields: ["url"],
+              },
+              thumbnail: {
+                fields: ["url"],
+              },
+            },
+          },
+          subscription: {
+            fields: ["revisionsLeft"],
+          },
+          members: {
+            fields: ["name", "username", "email"],
+          },
+        },
+      });
+      console.log(res);
+      console.log(typeof res);
+      if (res == null) {
+        ctx.notFound();
+      } else {
+        ctx.body = res;
+      }
+    } catch (error) {
+      ctx.internalServerError(error);
+    }
+  },
+
   create: async (ctx) => {
     try {
       const { name, description } = ctx.request.body;

@@ -39,6 +39,20 @@
       "relation": "manyToOne",
       "target": "api::project.project",
       "inversedBy": "videos"
+    },
+    "source": {
+      "type": "enumeration",
+      "enum": [
+        "local",
+        "bunny"
+      ]
+    },
+    "videoUrl": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "string",
+      "regex": "^(?:[0-5][0-9]):[0-5][0-9]$"
     }
   }
 }

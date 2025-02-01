@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -40,6 +40,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::video.video",
+      "mappedBy": "project"
+    },
+    "subscription": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::subscription.subscription",
       "mappedBy": "project"
     }
   }

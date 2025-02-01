@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -50,7 +50,12 @@
     "project": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::project.project"
+      "target": "api::project.project",
+      "inversedBy": "subscription"
+    },
+    "revisionsLeft": {
+      "type": "integer",
+      "min": 0
     }
   }
 }
