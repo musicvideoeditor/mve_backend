@@ -93,4 +93,19 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
       ctx.internalServerError(error);
     }
   },
+
+  update: async (ctx) => {
+    try {
+      const { description } = ctx.request.body;
+      const project = await strapi.documents("api::project.project").update({
+        documentId: ctx.params.id,
+        data: {
+          description: description,
+        },
+      });
+      ctx.body = project
+    } catch (error) {
+      ctx.internalServerError(error);
+    }
+  },
 }));
