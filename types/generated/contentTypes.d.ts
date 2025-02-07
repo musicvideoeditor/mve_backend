@@ -451,6 +451,46 @@ export interface ApiAppointmentAppointment extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAssetAsset extends Struct.CollectionTypeSchema {
+  collectionName: 'assets';
+  info: {
+    description: '';
+    displayName: 'Asset';
+    pluralName: 'assets';
+    singularName: 'asset';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    approvalStatus: Schema.Attribute.Enumeration<
+      ['pending', 'reviewing', 'accepted', 'rejected']
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
+    assets: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::asset.asset'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
+    publishedAt: Schema.Attribute.DateTime;
+    remarks: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    uploadedBy: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiCommentComment extends Struct.CollectionTypeSchema {
   collectionName: 'comments';
   info: {
@@ -1285,6 +1325,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::appointment-slot.appointment-slot': ApiAppointmentSlotAppointmentSlot;
       'api::appointment.appointment': ApiAppointmentAppointment;
+      'api::asset.asset': ApiAssetAsset;
       'api::comment.comment': ApiCommentComment;
       'api::notification.notification': ApiNotificationNotification;
       'api::plan.plan': ApiPlanPlan;

@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "assets",
+  "info": {
+    "singularName": "asset",
+    "pluralName": "assets",
+    "displayName": "Asset",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "project": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project.project"
+    },
+    "assets": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "approvalStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "reviewing",
+        "accepted",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "remarks": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "uploadedBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}
