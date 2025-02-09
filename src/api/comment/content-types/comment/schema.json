@@ -12,9 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "timestamp": {
-      "type": "string"
-    },
     "video": {
       "type": "relation",
       "relation": "oneToOne",
@@ -35,6 +32,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "admin::user"
+    },
+    "minutes": {
+      "type": "integer"
+    },
+    "seconds": {
+      "type": "integer"
     }
   }
 }

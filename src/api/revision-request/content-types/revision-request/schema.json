@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "revision_requests",
+  "info": {
+    "singularName": "revision-request",
+    "pluralName": "revision-requests",
+    "displayName": "Revision Request"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "message": {
+      "type": "text"
+    },
+    "fees": {
+      "type": "integer"
+    },
+    "revisionStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "approved",
+        "working",
+        "delivered",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "requestedBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "video": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::video.video"
+    }
+  }
+}

@@ -517,10 +517,11 @@ export interface ApiCommentComment extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     message: Schema.Attribute.String;
+    minutes: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     respondedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     response: Schema.Attribute.String;
-    timestamp: Schema.Attribute.String;
+    seconds: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -653,6 +654,46 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     videos: Schema.Attribute.Relation<'oneToMany', 'api::video.video'>;
+  };
+}
+
+export interface ApiRevisionRequestRevisionRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'revision_requests';
+  info: {
+    displayName: 'Revision Request';
+    pluralName: 'revision-requests';
+    singularName: 'revision-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fees: Schema.Attribute.Integer;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::revision-request.revision-request'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    requestedBy: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    revisionStatus: Schema.Attribute.Enumeration<
+      ['pending', 'approved', 'working', 'delivered', 'rejected']
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    video: Schema.Attribute.Relation<'oneToOne', 'api::video.video'>;
   };
 }
 
@@ -1330,6 +1371,7 @@ declare module '@strapi/strapi' {
       'api::notification.notification': ApiNotificationNotification;
       'api::plan.plan': ApiPlanPlan;
       'api::project.project': ApiProjectProject;
+      'api::revision-request.revision-request': ApiRevisionRequestRevisionRequest;
       'api::subscription.subscription': ApiSubscriptionSubscription;
       'api::transaction.transaction': ApiTransactionTransaction;
       'api::unavailable-slot.unavailable-slot': ApiUnavailableSlotUnavailableSlot;
