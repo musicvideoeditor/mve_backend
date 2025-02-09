@@ -25,6 +25,9 @@ module.exports = createCoreController("api::comment.comment", ({ strapi }) => ({
             fields: ["firstname"],
           },
         },
+        sort: {
+          createdAt: "desc",
+        },
       });
       ctx.body = res;
     } catch (error) {
@@ -33,20 +36,21 @@ module.exports = createCoreController("api::comment.comment", ({ strapi }) => ({
   },
   create: async (ctx) => {
     try {
-      const { message, minutes, seconds, videoId } = ctx.request.body;
+      const { comment, includeTimestamp, timeStamp, videoId } = ctx.request.body;
+      const {minutes, seconds} = timeStamp
       const { user } = ctx.state;
 
       if (!user.documentId) {
         ctx.unauthorized();
       }
 
-      if (!videoId || !message) {
+      if (!videoId || !comment) {
         ctx.badRequest();
       }
 
       const res = await strapi.documents("api::comment.comment").create({
         data: {
-          message,
+          message: comment,
           author: {
             connect: [user.documentId],
           },
