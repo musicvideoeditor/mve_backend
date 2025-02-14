@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_configs",
+  "info": {
+    "singularName": "home-config",
+    "pluralName": "home-configs",
+    "displayName": "Home Config",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "showOfferSection": {
+      "type": "boolean",
+      "default": true
+    },
+    "clientLogos": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

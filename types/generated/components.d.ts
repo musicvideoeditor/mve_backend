@@ -1,10 +1,10 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface PlanBenefitsBenefits extends Struct.ComponentSchema {
-  collectionName: 'components_plan_benefits_benefits';
+export interface HomeHome extends Struct.ComponentSchema {
+  collectionName: 'components_home_homes';
   info: {
-    displayName: 'benefits';
-    icon: 'check';
+    displayName: 'Home';
+    icon: 'house';
   };
   attributes: {
     benefit: Schema.Attribute.String;
@@ -14,7 +14,7 @@ export interface PlanBenefitsBenefits extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'plan-benefits.benefits': PlanBenefitsBenefits;
+      'home.home': HomeHome;
     }
   }
 }

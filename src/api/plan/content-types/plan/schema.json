@@ -31,18 +31,21 @@
       "required": true,
       "default": 1
     },
-    "benefits": {
-      "displayName": "benefits",
-      "type": "component",
-      "repeatable": true,
-      "component": "plan-benefits.benefits"
-    },
     "color": {
       "type": "customField",
       "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
       "customField": "plugin::color-picker.color"
     },
     "description": {
+      "type": "string"
+    },
+    "planBenefits": {
+      "displayName": "Home",
+      "type": "component",
+      "repeatable": true,
+      "component": "home.home"
+    },
+    "flag": {
       "type": "string"
     }
   }

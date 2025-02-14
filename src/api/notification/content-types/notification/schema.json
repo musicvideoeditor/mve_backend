@@ -32,6 +32,7 @@
     "category": {
       "type": "enumeration",
       "enum": [
+        "invite",
         "project",
         "system",
         "transaction"

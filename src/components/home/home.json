@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_home_homes",
+  "info": {
+    "displayName": "Home",
+    "icon": "house"
+  },
+  "options": {},
+  "attributes": {
+    "benefit": {
+      "type": "string"
+    }
+  }
+}
