@@ -466,7 +466,7 @@ export interface ApiAssetAsset extends Struct.CollectionTypeSchema {
     approvalStatus: Schema.Attribute.Enumeration<
       ['pending', 'reviewing', 'accepted', 'rejected']
     > &
-      Schema.Attribute.DefaultTo<'pending'>;
+      Schema.Attribute.DefaultTo<'reviewing'>;
     assets: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true

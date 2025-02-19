@@ -36,7 +36,7 @@
         "accepted",
         "rejected"
       ],
-      "default": "pending"
+      "default": "reviewing"
     },
     "remarks": {
       "type": "string"
