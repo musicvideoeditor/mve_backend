@@ -579,6 +579,7 @@ export interface ApiHomeConfigHomeConfig extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
+    phoneNumber: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     showOfferSection: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<true>;
@@ -591,6 +592,7 @@ export interface ApiHomeConfigHomeConfig extends Struct.SingleTypeSchema {
 export interface ApiInviteInvite extends Struct.CollectionTypeSchema {
   collectionName: 'invites';
   info: {
+    description: '';
     displayName: 'Invite';
     pluralName: 'invites';
     singularName: 'invite';
@@ -603,6 +605,10 @@ export interface ApiInviteInvite extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    invitedBy: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -614,10 +620,7 @@ export interface ApiInviteInvite extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
+    userEmail: Schema.Attribute.String;
   };
 }
 
@@ -687,6 +690,7 @@ export interface ApiPlanPlan extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     planBenefits: Schema.Attribute.Component<'home.home', true>;
+    position: Schema.Attribute.Integer;
     price: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     revisions: Schema.Attribute.Integer;
@@ -1436,6 +1440,7 @@ export interface PluginUsersPermissionsUser
     draftAndPublish: false;
   };
   attributes: {
+    avatar: Schema.Attribute.Media<'images'>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;

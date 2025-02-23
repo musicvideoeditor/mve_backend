@@ -12,7 +12,7 @@ export default factories.createCoreController(
         const homeConfig = await strapi
           .documents("api::home-config.home-config")
           .findFirst({
-            fields: ["showOfferSection"],
+            fields: ["showOfferSection", "phoneNumber"],
             populate: {
               clientLogos: {
                 fields: ["url"],
@@ -41,6 +41,9 @@ export default factories.createCoreController(
             planBenefits: {
               fields: ["benefit"],
             },
+          },
+          sort: {
+            position: "asc",
           },
         });
 

@@ -11,9 +11,18 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
     try {
       const data = await strapi.documents("api::project.project").findMany({
         filters: {
-          author: {
-            documentId: ctx.state.user.documentId,
-          },
+          $or: [
+            {
+              author: {
+                documentId: ctx.state.user.documentId,
+              },
+            },
+            {
+              members: {
+                documentId: ctx.state.user.documentId,
+              },
+            },
+          ],
         },
         fields: ["name", "description", "createdAt"],
         populate: {
@@ -59,6 +68,11 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
           },
           members: {
             fields: ["name", "username", "email"],
+            populate: {
+              avatar: {
+                fields: ["url"],
+              },
+            },
           },
         },
       });
@@ -103,7 +117,7 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
           description: description,
         },
       });
-      ctx.body = project
+      ctx.body = project;
     } catch (error) {
       ctx.internalServerError(error);
     }

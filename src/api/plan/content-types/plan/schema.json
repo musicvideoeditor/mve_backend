@@ -47,6 +47,9 @@
     },
     "flag": {
       "type": "string"
+    },
+    "position": {
+      "type": "integer"
     }
   }
 }
