@@ -69,11 +69,17 @@
       "type": "string"
     },
     "avatar": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 10,
+      "minLength": 10
     }
   }
 }

@@ -1,4 +1,4 @@
-module.exports = ({env}) => ({
+module.exports = ({ env }) => ({
   "users-permissions": {
     config: {
       register: {
@@ -20,6 +20,18 @@ module.exports = ({env}) => ({
       settings: {
         defaultFrom: "noreply@musicvideoeditor.com",
         defaultReplyTo: "contact@musicvideoeditor.com",
+      },
+    },
+  },
+  upload: {
+    config: {
+      provider: "@nexide/strapi-provider-bunny",
+      providerOptions: {
+        api_key: env("BUNNY_API_KEY"),
+        storage_zone: env("BUNNY_STORAGE_ZONE"),
+        pull_zone: env("BUNNY_PULL_ZONE"),
+        hostname: env("BUNNY_HOSTNAME"),
+        upload_path: env("BUNNY_UPLOAD_PATH"),
       },
     },
   },
