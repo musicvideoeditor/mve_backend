@@ -29,6 +29,12 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
           videos: {
             fields: ["name"],
           },
+          members:{
+            fields: ['name', 'username', 'email', 'createdAt']
+          },
+          author:{
+            fields: ['email', 'name', 'username', 'createdAt']
+          }
         },
         sort: {
           createdAt: "desc",
