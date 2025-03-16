@@ -72,7 +72,7 @@ export default factories.createCoreController(
             },
             subject: "You have been invited to join a project",
             message: `
-            ${ctx.state.user.name} has invited to join <b>${project?.name}</b>. 
+            ${ctx.state.user.name ?? ctx.state.user.username} has invited to join <b>${project?.name}</b>. 
             Click the link below to accept the invitation.
             <br/>
             <a href="${process.env.CLIENT_URL}/dashboard/invites/${res?.documentId}">Accept Invitation</a>

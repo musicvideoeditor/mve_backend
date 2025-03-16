@@ -29,6 +29,9 @@ export default factories.createCoreController(
                 fields: ["url"],
               },
             },
+            sort: {
+              position: "asc",
+            },
           });
 
         const faqs = await strapi.documents("api::faq.faq").findMany({

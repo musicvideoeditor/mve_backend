@@ -713,6 +713,7 @@ export interface ApiPlanPlan extends Struct.CollectionTypeSchema {
 export interface ApiPortfolioPortfolio extends Struct.CollectionTypeSchema {
   collectionName: 'portfolios';
   info: {
+    description: '';
     displayName: 'Portfolio';
     pluralName: 'portfolios';
     singularName: 'portfolio';
@@ -733,6 +734,7 @@ export interface ApiPortfolioPortfolio extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    position: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
