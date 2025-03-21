@@ -568,6 +568,7 @@ export interface ApiHomeConfigHomeConfig extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    bunnyLibraryId: Schema.Attribute.String;
     clientLogos: Schema.Attribute.Media<'images', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -578,7 +579,6 @@ export interface ApiHomeConfigHomeConfig extends Struct.SingleTypeSchema {
       'api::home-config.home-config'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
     phoneNumber: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     showOfferSection: Schema.Attribute.Boolean &

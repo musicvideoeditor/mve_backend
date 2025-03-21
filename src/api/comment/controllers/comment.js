@@ -1,5 +1,7 @@
 "use strict";
 
+const { default: axios } = require("axios");
+
 /**
  * comment controller
  */
@@ -34,10 +36,12 @@ module.exports = createCoreController("api::comment.comment", ({ strapi }) => ({
       ctx.internalServerError(error);
     }
   },
+
   create: async (ctx) => {
     try {
-      const { comment, includeTimestamp, timeStamp, videoId } = ctx.request.body;
-      const {minutes, seconds} = timeStamp
+      const { comment, includeTimestamp, timeStamp, videoId } =
+        ctx.request.body;
+      const { minutes, seconds } = timeStamp;
       const { user } = ctx.state;
 
       if (!user.documentId) {
@@ -68,8 +72,41 @@ module.exports = createCoreController("api::comment.comment", ({ strapi }) => ({
           respondedBy: {
             fields: ["firstname"],
           },
+          video: {
+            fields: ["source", "videoUrl"],
+          },
         },
       });
+
+      if (minutes + seconds != 0 && res.video?.source == "bunny") {
+        const url = res?.video?.videoUrl;
+        const libraryId = url?.split("/embed/")[1]?.split("/")[0];
+        const videoId = url?.split("/embed/")[1]?.split("/")[1];
+
+        try {
+          await axios.post(
+            `https://video.bunnycdn.com/library/${libraryId}/videos/${videoId}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                AccessKey: process.env.BUNNY_STREAM_KEY,
+              },
+              body: {
+                moments: [
+                  {
+                    label: comment,
+                    timestamp: minutes * 60 + seconds,
+                  },
+                ],
+              },
+            },
+          );
+        } catch (error) {
+          console.log("Error while posting comment to Bunny");
+          console.log(error);
+        }
+      }
+
       ctx.body = res;
     } catch (error) {
       ctx.internalServerError(error);
