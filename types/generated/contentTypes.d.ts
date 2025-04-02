@@ -879,6 +879,39 @@ export interface ApiSubscriptionSubscription
   };
 }
 
+export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
+  collectionName: 'teams';
+  info: {
+    displayName: 'Team';
+    pluralName: 'teams';
+    singularName: 'team';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    inviteAccepted: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    inviteAcceptedAt: Schema.Attribute.DateTime;
+    isBlocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::team.team'> &
+      Schema.Attribute.Private;
+    member: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTransactionTransaction extends Struct.CollectionTypeSchema {
   collectionName: 'transactions';
   info: {
@@ -1513,6 +1546,7 @@ declare module '@strapi/strapi' {
       'api::project.project': ApiProjectProject;
       'api::revision-request.revision-request': ApiRevisionRequestRevisionRequest;
       'api::subscription.subscription': ApiSubscriptionSubscription;
+      'api::team.team': ApiTeamTeam;
       'api::transaction.transaction': ApiTransactionTransaction;
       'api::unavailable-slot.unavailable-slot': ApiUnavailableSlotUnavailableSlot;
       'api::video.video': ApiVideoVideo;
