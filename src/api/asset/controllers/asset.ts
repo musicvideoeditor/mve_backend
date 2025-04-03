@@ -51,29 +51,6 @@ export default factories.createCoreController(
           return ctx.badRequest("Project ID (projectId) is required");
         }
 
-        const project = await strapi
-          .documents("api::project.project")
-          .findFirst({
-            filters: {
-              documentId: projectId,
-              $or: [
-                {
-                  author: {
-                    id: ctx.state.user.id,
-                  },
-                },
-                {
-                  members: {
-                    id: ctx.state.user.id,
-                  },
-                },
-              ],
-            },
-          });
-
-        if (!project) {
-          return ctx.notFound("Project not found");
-        }
 
         const res = await strapi.documents("api::asset.asset").create({
           data: {

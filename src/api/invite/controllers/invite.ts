@@ -175,30 +175,25 @@ export default factories.createCoreController(
         }
 
         // Add user to project
-        await strapi.documents("api::project.project").update({
-          documentId: invite?.project?.documentId,
-          data: {
-            members: {
+        const date = new Date()
+        await strapi.documents("api::project-member.project-member").create({
+          data:{
+            project: {
+              // @ts-ignore
+              connect: [invite?.project?.documentId],
+            },
+            user: {
+              // @ts-ignore
               connect: [ctx.state.user.documentId],
             },
-          },
-        });
+            isBlocked: false,
+            isConfirmed: true,
+            invitedAt: invite?.createdAt,
+            joinedAt: date,
+          }
+        })
 
-        const res = await strapi.documents("api::invite.invite").update({
-          documentId: id,
-          data: {
-            accepted: true,
-          },
-          fields: ["createdAt", "accepted", "userEmail"],
-          populate: {
-            project: {
-              fields: ["name", "description"],
-            },
-            invitedBy: {
-              fields: ["email", "name", "username"],
-            },
-          },
-        });
+        const res = await strapi.documents("api::invite.invite").delete(id);
 
         ctx.body = res;
       } catch (error) {

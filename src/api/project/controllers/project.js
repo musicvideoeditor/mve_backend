@@ -18,9 +18,20 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
               },
             },
             {
-              members: {
-                documentId: ctx.state.user.documentId,
-              },
+              $and: [
+                {
+                  members: {
+                    user: {
+                      documentId: ctx.state.user.documentId,
+                    },
+                  },
+                },
+                {
+                  members: {
+                    isBlocked: false,
+                  },
+                },
+              ],
             },
           ],
         },
@@ -29,12 +40,17 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
           videos: {
             fields: ["name"],
           },
-          members:{
-            fields: ['name', 'username', 'email', 'createdAt']
+          members: {
+            fields: ["isBlocked", "isConfirmed"],
+            populate: {
+              user: {
+                fields: ["name", "username", "email", "createdAt"],
+              },
+            },
           },
-          author:{
-            fields: ['email', 'name', 'username', 'createdAt']
-          }
+          author: {
+            fields: ["email", "name", "username", "createdAt"],
+          },
         },
         sort: {
           createdAt: "desc",
@@ -73,10 +89,15 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
             fields: ["revisionsLeft"],
           },
           members: {
-            fields: ["name", "username", "email"],
+            fields: ["isBlocked", "isConfirmed"],
             populate: {
-              avatar: {
-                fields: ["url"],
+              user: {
+                fields: ["name", "username", "email", "createdAt"],
+                populate: {
+                  avatar: {
+                    fields: ["url"],
+                  },
+                },
               },
             },
           },

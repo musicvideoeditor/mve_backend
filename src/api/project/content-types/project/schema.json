@@ -31,11 +31,6 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "members": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "plugin::users-permissions.user"
-    },
     "videos": {
       "type": "relation",
       "relation": "oneToMany",
@@ -46,6 +41,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::subscription.subscription",
+      "mappedBy": "project"
+    },
+    "members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::project-member.project-member",
       "mappedBy": "project"
     }
   }

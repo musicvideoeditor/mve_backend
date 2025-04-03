@@ -743,6 +743,44 @@ export interface ApiPortfolioPortfolio extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiProjectMemberProjectMember
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'project_members';
+  info: {
+    description: '';
+    displayName: 'Project Member';
+    pluralName: 'project-members';
+    singularName: 'project-member';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    invitedAt: Schema.Attribute.DateTime;
+    isBlocked: Schema.Attribute.Boolean;
+    isConfirmed: Schema.Attribute.Boolean;
+    joinedAt: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-member.project-member'
+    > &
+      Schema.Attribute.Private;
+    project: Schema.Attribute.Relation<'manyToOne', 'api::project.project'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
@@ -771,7 +809,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     members: Schema.Attribute.Relation<
       'oneToMany',
-      'plugin::users-permissions.user'
+      'api::project-member.project-member'
     >;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
@@ -876,39 +914,6 @@ export interface ApiSubscriptionSubscription
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-  };
-}
-
-export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
-  collectionName: 'teams';
-  info: {
-    displayName: 'Team';
-    pluralName: 'teams';
-    singularName: 'team';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    inviteAccepted: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
-    inviteAcceptedAt: Schema.Attribute.DateTime;
-    isBlocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::team.team'> &
-      Schema.Attribute.Private;
-    member: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
   };
 }
 
@@ -1543,10 +1548,10 @@ declare module '@strapi/strapi' {
       'api::notification.notification': ApiNotificationNotification;
       'api::plan.plan': ApiPlanPlan;
       'api::portfolio.portfolio': ApiPortfolioPortfolio;
+      'api::project-member.project-member': ApiProjectMemberProjectMember;
       'api::project.project': ApiProjectProject;
       'api::revision-request.revision-request': ApiRevisionRequestRevisionRequest;
       'api::subscription.subscription': ApiSubscriptionSubscription;
-      'api::team.team': ApiTeamTeam;
       'api::transaction.transaction': ApiTransactionTransaction;
       'api::unavailable-slot.unavailable-slot': ApiUnavailableSlotUnavailableSlot;
       'api::video.video': ApiVideoVideo;
