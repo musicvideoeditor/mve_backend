@@ -68,7 +68,7 @@ export default factories.createCoreController(
             receiver: {
               email: userEmail,
               ...(user && { name: userName }),
-              ...(user && { userDocumentId: user?.documentId }),
+              ...(user && { userDocumentId: [user?.documentId] }),
             },
             subject: "You have been invited to join a project",
             message: `

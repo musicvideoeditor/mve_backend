@@ -61,7 +61,7 @@ export default () => ({
   sendDashboardNotification: async (props: Partial<NotificationProps>) => {
     try {
       console.log(props);
-      if (!props.receiver.userDocumentId) return true;
+      if (!props.receiver.userDocumentId) return { message: "ok" };
 
       await strapi.documents("api::notification.notification").create({
         data: {
@@ -77,10 +77,7 @@ export default () => ({
           ...(props?.receiver?.userDocumentId && {
             targetUser: {
               // @ts-ignore
-              connect:
-                typeof props?.receiver?.userDocumentId == "object"
-                  ? props?.receiver?.userDocumentId
-                  : [props?.receiver?.userDocumentId],
+              connect: props?.receiver?.userDocumentId,
             },
           }),
         },
