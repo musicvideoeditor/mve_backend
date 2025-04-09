@@ -48,6 +48,12 @@
       "relation": "oneToMany",
       "target": "api::project-member.project-member",
       "mappedBy": "project"
+    },
+    "statusTitle": {
+      "type": "string"
+    },
+    "statusSubtitle": {
+      "type": "string"
     }
   }
 }

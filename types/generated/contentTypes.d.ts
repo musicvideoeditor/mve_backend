@@ -813,6 +813,8 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     >;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    statusSubtitle: Schema.Attribute.String;
+    statusTitle: Schema.Attribute.String;
     subscription: Schema.Attribute.Relation<
       'oneToOne',
       'api::subscription.subscription'

@@ -35,7 +35,7 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
             },
           ],
         },
-        fields: ["name", "description", "createdAt"],
+        fields: ["name", "description", "createdAt", "statusSubtitle", "statusTitle"],
         populate: {
           videos: {
             fields: ["name"],
