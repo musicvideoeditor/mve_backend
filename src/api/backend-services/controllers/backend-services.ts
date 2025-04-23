@@ -58,19 +58,19 @@ export default {
 
       console.log(OTP);
 
-      // await strapi
-      //   .service("api::backend-services.backend-services")
-      //   .sendNotification({
-      //     channel: ["email"],
-      //     receiver: {
-      //       email: email,
-      //       ...(name && { name: name }),
-      //     },
-      //     subject: "Music Video Editor OTP",
-      //     message: `
-      //       Hello ${name}, <b>${OTP}</b> is your OTP to create your account on musicvideoeditor.com
-      //       `,
-      //   });
+      await strapi
+        .service("api::backend-services.backend-services")
+        .sendNotification({
+          channel: ["email"],
+          receiver: {
+            email: email,
+            ...(name && { name: name }),
+          },
+          subject: "Music Video Editor OTP",
+          message: `
+            Hello ${name}, <b>${OTP}</b> is your OTP to create your account on musicvideoeditor.com
+            `,
+        });
 
       return { message: "OTP sent successfully!" };
     } catch (error) {
