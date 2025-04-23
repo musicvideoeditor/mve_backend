@@ -19,6 +19,7 @@
     "@strapi/provider-email-nodemailer": "^5.10.3",
     "@strapi/strapi": "5.9.0",
     "axios": "^1.8.4",
+    "bcrypt": "^5.1.1",
     "pg": "^8.13.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

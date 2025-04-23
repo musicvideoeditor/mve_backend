@@ -80,6 +80,10 @@
       "type": "string",
       "maxLength": 10,
       "minLength": 10
+    },
+    "otpHash": {
+      "type": "text",
+      "private": true
     }
   }
 }

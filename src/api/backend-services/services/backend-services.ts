@@ -87,4 +87,19 @@ export default () => ({
       throw new Error(error);
     }
   },
+
+  checkUser: async (email: string) => {
+    try {
+      const user = await strapi
+        .documents("plugin::users-permissions.user")
+        .findFirst({
+          filters: {
+            email,
+          },
+        });
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
 });
