@@ -21,7 +21,7 @@ export default factories.createCoreController(
               documentId: projectId,
             },
           },
-          fields: ["createdAt", "name", "approvalStatus"],
+          fields: ["createdAt", "name", "approvalStatus", "url", "filesCount"],
           populate: {
             project: {
               fields: ["name"],
@@ -45,7 +45,7 @@ export default factories.createCoreController(
 
     create: async (ctx) => {
       try {
-        const { projectId, name } = ctx.request.body;
+        const { projectId, name, filesCount, url } = ctx.request.body;
 
         if (!projectId) {
           return ctx.badRequest("Project ID (projectId) is required");
@@ -63,6 +63,8 @@ export default factories.createCoreController(
               // @ts-ignore
               connect: [ctx.state.user.documentId],
             },
+            url: url,
+            filesCount: filesCount ?? 0
           },
           fields: ["createdAt", "name", "approvalStatus"],
           populate: {

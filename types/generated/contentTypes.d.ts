@@ -474,6 +474,7 @@ export interface ApiAssetAsset extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    filesCount: Schema.Attribute.Integer;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::asset.asset'> &
       Schema.Attribute.Private;
@@ -488,6 +489,7 @@ export interface ApiAssetAsset extends Struct.CollectionTypeSchema {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    url: Schema.Attribute.String;
   };
 }
 
