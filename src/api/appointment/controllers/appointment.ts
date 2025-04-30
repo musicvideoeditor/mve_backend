@@ -16,10 +16,10 @@ export default factories.createCoreController(
             data: {
               date: date,
               purpose: purpose,
-              slot: {
-                // @ts-ignore
-                connect: slots,
-              },
+              // slot: {
+              //   // @ts-ignore
+              //   connect: slots,
+              // },
               user: {
                 // @ts-ignore
                 connect: [ctx.state.user.documentId],
